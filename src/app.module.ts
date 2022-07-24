@@ -10,19 +10,21 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 @Module({
    imports: [
       ConfigModule.forRoot({ isGlobal: true }),
-      TypeOrmModule.forRootAsync({
-         imports: [ConfigModule],
-         useFactory: (configService: ConfigService) => ({
-            url: configService.get('DATABASE_URL'),
-            type: 'postgres',
-            entities: [join(__dirname, './entity', '*.entity.{ts,js}')],
-            synchronize: true,
-         }),
-         inject: [ConfigService],
+      TypeOrmModule.forRoot({
+         url: process.env.DATABASE_URL,
+         type: 'postgres',
+         entities: [join(__dirname, './entity', '*.entity.{ts,js}')],
+         synchronize: true,
+         ssl: true,
+         extra: {
+            ssl: {
+               rejectUnauthorized: false,
+            },
+         },
       }),
-      // ServeStaticModule.forRoot({
-      //    rootPath: join(__dirname, './', 'client/build'),
-      // }),
+      ServeStaticModule.forRoot({
+         rootPath: join(__dirname, './', 'client/build'),
+      }),
       UserModule,
    ],
    controllers: [AppController],
