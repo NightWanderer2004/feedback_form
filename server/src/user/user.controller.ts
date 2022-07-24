@@ -17,9 +17,6 @@ export class UserController {
       const result = await this.UserService.addNew(dto)
 
       if (!dto) return res.status(404).send(result)
-      else {
-         await this.UserService.sendMail(dto)
-         return res.status(202).send(result)
-      }
+      else return res.status(200).send(result)
    }
 }
