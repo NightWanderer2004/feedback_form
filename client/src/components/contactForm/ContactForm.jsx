@@ -1,4 +1,5 @@
 import { Formik } from 'formik'
+import axios from 'axios'
 import InputGroup from './InputGroup'
 import SubmitButton from './SubmitButton'
 
@@ -18,10 +19,14 @@ const ContactForm = () => {
          }}
          onSubmit={(values, { setSubmitting }) => {
             setTimeout(() => {
-               alert(JSON.stringify(values, null, 2))
+               axios.post('/api/user', JSON.stringify(values, null, 2)).catch(err => console.error(err))
+
+               values.name = ''
+               values.email = ''
+               values.message = ''
 
                setSubmitting(false)
-            }, 400)
+            }, 220)
          }}
       >
          {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
