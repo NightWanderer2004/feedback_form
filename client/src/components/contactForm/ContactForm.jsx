@@ -6,7 +6,7 @@ import InputGroup from './InputGroup'
 import SubmitButton from './SubmitButton'
 
 const Message = styled.p`
-   color: #16af16;
+   color: gray;
    font-weight: 600;
    font-size: 20px;
    margin-bottom: 12px;
