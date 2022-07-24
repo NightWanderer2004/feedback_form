@@ -7,12 +7,12 @@ export default class UserEntity {
    })
    id: number
 
-   @Column()
+   @Column({ nullable: true })
    name: string
 
-   @Column()
+   @Column({ nullable: true })
    email: string
 
-   @Column()
+   @Column({ nullable: true })
    message: string
 }
