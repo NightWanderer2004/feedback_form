@@ -12,6 +12,9 @@ export const formSlice = createSlice({
       setMessage: (state, action) => {
          state.message = action.payload
       },
+      setError: state => {
+         state.message = 'Sorry, something went wrong'
+      },
    },
 })
 export const postData = userData => {
@@ -19,11 +22,11 @@ export const postData = userData => {
       axios
          .post('/api/user', JSON.parse(userData))
          .then(res => dispatch(setMessage(res.data.message)))
-         .catch(err => console.error(err))
+         .catch(err => dispatch(setError()))
    }
 }
 
-export const { setMessage } = formSlice.actions
+export const { setMessage, setError } = formSlice.actions
 export const formSelector = state => state.formFeedback
 
 export default formSlice.reducer
