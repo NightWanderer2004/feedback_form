@@ -20,9 +20,9 @@ import { TypeOrmModule } from '@nestjs/typeorm'
          }),
          inject: [ConfigService],
       }),
-      ServeStaticModule.forRoot({
-         rootPath: join(__dirname, '../../', 'client/build'),
-      }),
+      // ServeStaticModule.forRoot({
+      //    rootPath: join(__dirname, './', 'client/build'),
+      // }),
       UserModule,
    ],
    controllers: [AppController],
