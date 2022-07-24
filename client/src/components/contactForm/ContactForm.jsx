@@ -1,9 +1,21 @@
 import { Formik } from 'formik'
-import axios from 'axios'
+import { useSelector, useDispatch } from 'react-redux'
+import styled from 'styled-components'
+import { postData } from '../../slices/formSlice'
 import InputGroup from './InputGroup'
 import SubmitButton from './SubmitButton'
 
+const Message = styled.p`
+   color: #16af16;
+   font-weight: 600;
+   font-size: 20px;
+   margin-bottom: 12px;
+`
+
 const ContactForm = () => {
+   const dispatch = useDispatch()
+   const { message } = useSelector(state => state.formFeedback)
+
    return (
       <Formik
          initialValues={{ name: '', email: '', message: '' }}
@@ -19,8 +31,9 @@ const ContactForm = () => {
          }}
          onSubmit={(values, { setSubmitting }) => {
             setTimeout(() => {
-               axios.post('/api/user', JSON.stringify(values, null, 2)).catch(err => console.error(err))
+               const userData = JSON.stringify(values, null, 2)
 
+               dispatch(postData(userData))
                values.name = ''
                values.email = ''
                values.message = ''
@@ -31,6 +44,7 @@ const ContactForm = () => {
       >
          {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
             <form onSubmit={handleSubmit}>
+               <Message>{message}</Message>
                <InputGroup
                   field='input'
                   errors={errors.name && touched.name && errors.name}
